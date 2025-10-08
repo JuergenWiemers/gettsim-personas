@@ -23,18 +23,65 @@ print(f"Number of individuals: {len(persona.input_data_tree['p_id'])}")
 print(f"\nDescription:\n{persona.description}")
 
 # Run GETTSIM to compute taxes and transfers
+# Add specific Kinderzuschlag targets for debugging
+additional_targets_tree = {
+    "kinderzuschlag": {
+        "betrag_m_bg": None,
+        "erwachsenenbedarf_m_bg": None,
+        "nettoeinkommen_eltern_m_bg": None,
+    },
+}
+
 result = main(
     main_target=MainTarget.results.df_with_nested_columns,
     policy_date_str=policy_date_str,
     input_data=InputData.tree(persona.input_data_tree),
-    tt_targets=TTTargets(tree=persona.tt_targets_tree),
+    tt_targets=TTTargets(tree=additional_targets_tree),
     include_warn_nodes=False,
 )
 
 print("\n" + "=" * 80)
+print("Kinderzuschlag Debugging Information")
+print("=" * 80)
+
+# Display the Kinderzuschlag-specific targets
+try:
+    kiz_betrag = result.get(("kinderzuschlag", "betrag_m_bg"))
+    kiz_erwachsenenbedarf = result.get(
+        ("kinderzuschlag", "erwachsenenbedarf_m_bg")
+    )
+    kiz_nettoeinkommen = result.get(
+        ("kinderzuschlag", "nettoeinkommen_eltern_m_bg")
+    )
+    
+    if kiz_betrag is not None:
+        print(f"\nkinderzuschlag__betrag_m_bg: {kiz_betrag[0]:.2f} EUR")
+    if kiz_erwachsenenbedarf is not None:
+        print(
+            f"kinderzuschlag__erwachsenenbedarf_m_bg: "
+            f"{kiz_erwachsenenbedarf[0]:.2f} EUR"
+        )
+    if kiz_nettoeinkommen is not None:
+        print(
+            f"kinderzuschlag__nettoeinkommen_eltern_m_bg: "
+            f"{kiz_nettoeinkommen[0]:.2f} EUR"
+        )
+    
+    # Show how much income is above the need threshold
+    if kiz_nettoeinkommen is not None and kiz_erwachsenenbedarf is not None:
+        diff = kiz_nettoeinkommen[0] - kiz_erwachsenenbedarf[0]
+        print(f"\nIncome above need threshold: {diff:.2f} EUR")
+        print(
+            "This excess income reduces Kinderzuschlag at the "
+            "entzugsrate_elterneinkommen rate"
+        )
+except Exception as e:
+    print(f"Could not extract Kinderzuschlag debugging info: {e}")
+
+print("\n" + "=" * 80)
 print("Sample Results (first 7 rows)")
 print("=" * 80)
-print(result.head(7))
+print(result)
 
 # Show some specific columns of interest
 print("\n" + "=" * 80)
