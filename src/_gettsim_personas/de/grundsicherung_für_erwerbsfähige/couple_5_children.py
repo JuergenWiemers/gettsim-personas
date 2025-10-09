@@ -350,3 +350,23 @@ def kinderzuschlag__betrag_m_bg() -> None:
 @persona_target_element(start_date="2005-01-01")
 def kindergeld__betrag_m() -> None:
     pass
+
+
+@persona_target_element(start_date="2005-01-01")
+def einkommensteuer__einkünfte__aus_forst_und_landwirtschaft__betrag_m() -> None:
+    pass
+
+
+@persona_target_element(start_date="2005-01-01")
+def einkommensteuer__einkünfte__aus_gewerbebetrieb__betrag_m() -> None:
+    pass
+
+
+@persona_target_element(start_date="2005-01-01")
+def einkommensteuer__einkünfte__aus_selbstständiger_arbeit__betrag_m() -> None:
+    pass
+
+
+@persona_target_element(start_date="2005-01-01")
+def einkommensteuer__einkünfte__aus_vermietung_und_verpachtung__betrag_m() -> None:
+    pass
