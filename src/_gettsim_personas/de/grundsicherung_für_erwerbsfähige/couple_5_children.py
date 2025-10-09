@@ -370,3 +370,8 @@ def einkommensteuer__einkünfte__aus_selbstständiger_arbeit__betrag_m() -> None
 @persona_target_element(start_date="2005-01-01")
 def einkommensteuer__einkünfte__aus_vermietung_und_verpachtung__betrag_m() -> None:
     pass
+
+
+@persona_target_element(start_date="2005-01-01")
+def einnahmen__kapitalerträge_m() -> np.ndarray:
+    pass
