@@ -1,4 +1,4 @@
-"""Persona for a couple with 2 children receiving basic subsistence benefits.
+"""Persona for a single person with 3 children receiving basic subsistence benefits.
 
 This persona represents a low-income household eligible for Bürgergeld
 (formerly Arbeitslosengeld 2).
@@ -19,7 +19,7 @@ from _gettsim_personas.persona_elements import (
 @persona_description(
     description=(
         """Persona to compute mean-tested transfers for low-income households.
-        Jointly taxed married couple with two children aged 3 and 5.
+        Single parent with three children aged 3, 5, and 7.
         Income from pensions, parental leave benefits and subsistence benefits for
         the elderly are set to zero."""
     ),
@@ -41,7 +41,7 @@ def hh_id() -> np.ndarray:
 
 @persona_input_element(start_date="2005-01-01")
 def alter() -> np.ndarray:
-    return np.array([30, 30, 3, 5])
+    return np.array([30, 3, 5, 7])
 
 
 @persona_input_element(start_date="2005-01-01")
@@ -51,12 +51,12 @@ def alter_monate(alter: np.ndarray) -> np.ndarray:
 
 @persona_input_element(start_date="2005-01-01", end_date="2022-12-31")
 def arbeitslosengeld_2__p_id_einstandspartner() -> np.ndarray:
-    return np.array([1, 0, -1, -1])
+    return np.array([-1, -1, -1, -1])
 
 
 @persona_input_element(start_date="2023-01-01")
 def bürgergeld__p_id_einstandspartner() -> np.ndarray:
-    return np.array([1, 0, -1, -1])
+    return np.array([-1, -1, -1, -1])
 
 
 @persona_input_element(start_date="2023-01-01")
@@ -81,12 +81,12 @@ def einkommensteuer__abzüge__beitrag_private_rentenversicherung_m() -> np.ndarr
 
 @persona_input_element(start_date="2005-01-01")
 def einkommensteuer__abzüge__kinderbetreuungskosten_m() -> np.ndarray:
-    return np.array([0, 0, 100, 100])
+    return np.array([0, 100, 100, 0])
 
 
 @persona_input_element(start_date="2005-01-01")
 def einkommensteuer__abzüge__p_id_kinderbetreuungskostenträger() -> np.ndarray:
-    return np.array([-1, -1, 0, 0])
+    return np.array([-1, 0, 0, -1])
 
 
 @persona_input_element(start_date="2005-01-01")
@@ -130,7 +130,7 @@ def einkommensteuer__einkünfte__sonstige__alle_weiteren_y() -> np.ndarray:
 
 @persona_input_element(start_date="2005-01-01")
 def einkommensteuer__gemeinsam_veranlagt() -> np.ndarray:
-    return np.array([True, True, False, False])
+    return np.array([False, False, False, False])
 
 
 @persona_input_element(start_date="2005-01-01")
@@ -140,7 +140,7 @@ def einnahmen__bruttolohn_m() -> np.ndarray:
 
 @persona_input_element(start_date="2005-01-01")
 def einnahmen__kapitalerträge_y() -> np.ndarray:
-    return np.array([0.0, 0.0, 0, 0])
+    return np.array([0.0, 0, 0, 0])
 
 
 @persona_input_element()
@@ -192,22 +192,22 @@ def elterngeld__betrag_m() -> np.ndarray:
 
 @persona_input_element(start_date="2005-01-01")
 def familie__alleinerziehend() -> np.ndarray:
-    return np.array([False, False, False, False])
+    return np.array([True, False, False, False])
 
 
 @persona_input_element(start_date="2005-01-01")
 def familie__p_id_ehepartner() -> np.ndarray:
-    return np.array([1, 0, -1, -1])
+    return np.array([-1, -1, -1, -1])
 
 
 @persona_input_element(start_date="2005-01-01")
 def familie__p_id_elternteil_1() -> np.ndarray:
-    return np.array([-1, -1, 0, 0])
+    return np.array([-1, 0, 0, 0])
 
 
 @persona_input_element(start_date="2005-01-01")
 def familie__p_id_elternteil_2() -> np.ndarray:
-    return np.array([-1, -1, 1, 1])
+    return np.array([-1, -1, -1, -1])
 
 
 @persona_input_element(start_date="2005-01-01")
@@ -230,7 +230,7 @@ def kindergeld__in_ausbildung() -> np.ndarray:
 
 @persona_input_element(start_date="2005-01-01")
 def kindergeld__p_id_empfänger() -> np.ndarray:
-    return np.array([-1, -1, 0, 0])
+    return np.array([-1, 0, 0, 0])
 
 
 @persona_input_element(start_date="2005-01-01")
@@ -273,7 +273,7 @@ def sozialversicherung__kranken__beitrag__privat_versichert() -> np.ndarray:
 
 @persona_input_element(start_date="2005-01-01")
 def sozialversicherung__pflege__beitrag__hat_kinder() -> np.ndarray:
-    return np.array([True, True, False, False])
+    return np.array([True, False, False, False])
 
 
 @persona_input_element(start_date="2021-01-01")
@@ -291,7 +291,7 @@ def unterhalt__tatsächlich_erhaltener_betrag_m() -> np.ndarray:
     return np.array([0, 0, 0, 0])
 
 
-@persona_input_element(start_date="2005-01-01")
+@persona_input_element(start_date="2005-01-01", end_date="2008-12-31")
 def unterhaltsvorschuss__betrag_m() -> np.ndarray:
     return np.array([0, 0, 0, 0])
 
